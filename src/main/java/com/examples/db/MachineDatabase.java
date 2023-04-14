@@ -12,14 +12,11 @@ import com.examples.applogic.MachinePart;
 
 public class MachineDatabase {
 	
-private static Map<String,Machine> machines;
-private static Map<String,MachinePart> machineParts;
+private static Map<String,Machine> machines=new HashMap<>();
+private static Map<String,MachinePart> machineParts=new HashMap<>();
 
-	public MachineDatabase() {
-		machines = new HashMap<>();
-		machineParts=new HashMap<>();
-	}
-	public List<String> getMachineTypes() {
+	
+	public static List<String> getMachineTypes() {
 	    Set<String> types = new HashSet<>();
 	    for (Machine machine : machines.values()) {
 	        types.add(machine.getMachineType());
@@ -27,7 +24,7 @@ private static Map<String,MachinePart> machineParts;
 	    return new ArrayList<>(types);
 	}
 	
-	public List<Integer> getMachinePartTypeIDs() {
+	public static List<Integer> getMachinePartTypeIDs() {
 	    Set<Integer> types = new HashSet<>();
 	    for (MachinePart machinePart : machineParts.values()) {
 	        types.add(machinePart.getPartTypeID());
@@ -36,25 +33,25 @@ private static Map<String,MachinePart> machineParts;
 	}
 	
 	
-	public List<Machine> getMachines() {
+	public static List<Machine> getMachines() {
 	    List<Machine> machineList = new ArrayList<>(machines.values());
 	    return machineList;
 	}
 	
-	public List<MachinePart> getMachineParts() {
+	public static List<MachinePart> getMachineParts() {
 	    List<MachinePart> machinePartsList = new ArrayList<>(machineParts.values());
 	    return machinePartsList;
 	}
 	
-	public Machine getMachine(String machineSerialNumber) {
+	public static Machine getMachine(String machineSerialNumber) {
 		return machines.get(machineSerialNumber);
 	}
 	
-	public MachinePart getMachinePart(String serialNumber) {
+	public static MachinePart getMachinePart(String serialNumber) {
 		return machineParts.get(serialNumber);
 	}
 	
-	public Machine addMachine(Machine machine) {
+	public static Machine addMachine(Machine machine) {
 		
 		if (machines.containsKey(machine.getMachineSerialNumber()))
 			return null;
@@ -63,7 +60,7 @@ private static Map<String,MachinePart> machineParts;
 	    return machine;
 	}
 	
-	public MachinePart addMachinePart(MachinePart machinePart) {
+	public static MachinePart addMachinePart(MachinePart machinePart) {
 		
 		if (machineParts.containsKey(machinePart.getSerialNumber()))
 			return null;
@@ -73,7 +70,7 @@ private static Map<String,MachinePart> machineParts;
 	}
 	
 	
-	public List<Machine> searchMachineByType(String type) {
+	public static List<Machine> searchMachineByType(String type) {
 	    List<Machine> matchingMachines = new ArrayList<>();
 	    for (Machine machine : machines.values()) {
 	        if (machine.getMachineType().equals(type)) {
@@ -83,17 +80,17 @@ private static Map<String,MachinePart> machineParts;
 	    return matchingMachines;
 	}
 	
-	public List<MachinePart> searchMachinePartByMachineSerialNum(String serialNum) {
-	    List<MachinePart> matchingMachines = new ArrayList<>();
+	public static List<MachinePart> searchMachinePartByMachineSerialNum(String serialNum) {
+	    List<MachinePart> matchingMachineParts = new ArrayList<>();
 	    for (MachinePart machinePart : machineParts.values()) {
 	        if (machinePart.getMachineSerialNumber().equals(serialNum)) {
-	            matchingMachines.add(machinePart);
+	            matchingMachineParts.add(machinePart);
 	        }
 	    }
-	    return matchingMachines;
+	    return matchingMachineParts;
 	}
 	
-	public Machine updateMachine(Machine machine) {
+	public static Machine updateMachine(Machine machine) {
 	    if (machines.containsKey(machine.getMachineSerialNumber())) {
 	        machines.put(machine.getMachineSerialNumber(), machine);
 	        return machine;
@@ -102,7 +99,7 @@ private static Map<String,MachinePart> machineParts;
 	    }
 	}
 	
-	public MachinePart updateMachinePart(MachinePart machinePart) {
+	public static MachinePart updateMachinePart(MachinePart machinePart) {
 	    if (machineParts.containsKey(machinePart.getMachineSerialNumber())) {
 	        machineParts.put(machinePart.getMachineSerialNumber(), machinePart);
 	        return machinePart;
@@ -111,7 +108,7 @@ private static Map<String,MachinePart> machineParts;
 	    }
 	}
 	
-	public boolean deleteMachinePart(String SerialNumber) {
+	public static boolean deleteMachinePart(String SerialNumber) {
 	    if (machineParts.containsKey(SerialNumber)) {
 	        machineParts.remove(SerialNumber);
 	        return true;
@@ -120,7 +117,7 @@ private static Map<String,MachinePart> machineParts;
 	    }
 	}
 	
-	public boolean deleteMachine(String machineSerialNumber) {
+	public static boolean deleteMachine(String machineSerialNumber) {
 	    if (machines.containsKey(machineSerialNumber)) {
 	        machines.remove(machineSerialNumber);
 	        return true;
