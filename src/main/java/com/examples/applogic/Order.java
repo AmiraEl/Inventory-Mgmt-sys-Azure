@@ -13,13 +13,41 @@ public class Order {
     private int quantity;
     private Date orderDate;
 
-    public Order(int partTypeID, String partName, int supplierID, String orderMethod, int quantity, String orderDate) throws ParseException {
+    private double itemsTotalPrice;
+    private double deliveryCharge;
+
+    public Order(int partTypeID, String partName, int supplierID, String orderMethod, int quantity, String orderDate, double itemsTotalPrice, double deliveryCharge)  {
         this.partTypeID = partTypeID;
         this.partName = partName;
         this.supplierID = supplierID;
         this.orderMethod = orderMethod;
         this.quantity = quantity;
-        this.orderDate = Utils.parseDate(orderDate, "yyyy-MM-dd");
+        
+        try {
+        
+        this.orderDate = Utils.parseDate(orderDate, "yyyy-MM-dd");}
+        catch(Exception e) {
+        	this.orderDate=new Date();
+        }
+        this.itemsTotalPrice = itemsTotalPrice;
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    
+    public double getItemsTotalPrice() {
+        return itemsTotalPrice;
+    }
+
+    public void setItemsTotalPrice(double itemsTotalPrice) {
+        this.itemsTotalPrice = itemsTotalPrice;
+    }
+
+    public double getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(double deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
     }
 
     public int getOrderID() {
@@ -78,10 +106,13 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+   
     @Override
     public String toString() {
         return "Order [orderID=" + orderID + ", partTypeID=" + partTypeID + ", partName=" + partName + ", supplierID=" + supplierID
-                + ", orderMethod=" + orderMethod + ", quantity=" + quantity + ", orderDate=" + orderDate + "]";
+                + ", orderMethod=" + orderMethod + ", quantity=" + quantity + ", orderDate=" + orderDate
+                + ", itemsTotalPrice=" + itemsTotalPrice + ", deliveryCharge=" + deliveryCharge + "]";
     }
+
 
 }

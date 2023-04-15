@@ -4,6 +4,9 @@ import com.examples.db.SupplierDatabase;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class SupplierService {
 
     public SupplierService() {

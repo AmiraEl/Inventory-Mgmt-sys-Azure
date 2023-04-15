@@ -7,19 +7,22 @@ public class Supplier {
     private String phoneNumber;
     private String website;
     private String address;
+    private double deliveryCharge;
 
     public Supplier(){
 
     }
+    
 
-    public Supplier(String name, String email, String phoneNumber, String website, String address) {
+    public Supplier(String name, String email, String phoneNumber, String website, String address, double deliveryCharge) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.website = website;
         this.address = address;
+        this.deliveryCharge = deliveryCharge;
     }
-
+    
     public int getID() {
         return ID;
     }
@@ -67,6 +70,13 @@ public class Supplier {
     public void setAddress(String address) {
         this.address = address;
     }
+    public double getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(double deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
 
     @Override
     public String toString() {
@@ -77,6 +87,7 @@ public class Supplier {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", website='" + website + '\'' +
                 ", address='" + address + '\'' +
+                ", deliveryCharge=" + deliveryCharge +
                 '}';
     }
 }

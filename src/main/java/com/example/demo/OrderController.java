@@ -24,6 +24,10 @@ public class OrderController {
 	public List<Order> getOrders() {
         return orderService.getOrders();
     }
+	@GetMapping("weekly")
+	public List<Order> getWeeklyOrders() {
+        return orderService.weeklyOrders();
+    }
 	
 	@GetMapping(path="{orderID}")
     public Order getOrder(@PathVariable("orderID")int orderID) {

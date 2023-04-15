@@ -3,8 +3,11 @@ package com.examples.applogic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.examples.db.InventoryDatabase;
 
+@Service
 public class InventoryService {
 	
 	

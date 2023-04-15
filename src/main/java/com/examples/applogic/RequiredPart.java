@@ -1,5 +1,7 @@
 package com.examples.applogic;
 
+import java.text.ParseException;
+
 public class RequiredPart {
     
     private int partTypeID;
@@ -19,6 +21,12 @@ public class RequiredPart {
         this.supplierID = partType.getSupplierID();
         this.itemPrice=partType.getPrice();
         this.quantity = quantity;
+    }
+    
+    public Order toOrder(double deliveryCharge, String orderMethod, String orderDate) {
+    	if (quantity>0) {
+    		return new Order(partTypeID, partName, supplierID, orderMethod, quantity, orderDate,  itemPrice*quantity, deliveryCharge);
+    	} else return null;
     }
 
     public int getPartTypeID() {
@@ -54,6 +62,10 @@ public class RequiredPart {
     }
     
     public void addToQuantity(int count) {
+        this.quantity = quantity+count;
+    }
+    
+    public void subtractFromQuantity(int count) {
         this.quantity = quantity+count;
     }
     
