@@ -111,8 +111,8 @@ private static Map<String,MachinePart> machineParts=new HashMap<>();
 	}
 	
 	public static MachinePart updateMachinePart(MachinePart machinePart) {
-	    if (machineParts.containsKey(machinePart.getMachineSerialNumber())) {
-	        machineParts.put(machinePart.getMachineSerialNumber(), machinePart);
+	    if (machineParts.containsKey(machinePart.getSerialNumber())) {
+	        machineParts.put(machinePart.getSerialNumber(), machinePart);
 	        return machinePart;
 	    } else {
 	        return null;

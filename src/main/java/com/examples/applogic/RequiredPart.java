@@ -10,7 +10,7 @@ public class RequiredPart {
     private double totalItemsPrice;
     private double itemPrice;
     private int quantity;
-    
+    private int expectedDeliveryDuration;
     public RequiredPart() {
     	
     }
@@ -21,6 +21,7 @@ public class RequiredPart {
         this.supplierID = partType.getSupplierID();
         this.itemPrice=partType.getPrice();
         this.quantity = quantity;
+        this.expectedDeliveryDuration=partType.getExpectedDeliveryDuration();
     }
     
     public Order toOrder(double deliveryCharge, String orderMethod, String orderDate) {
@@ -66,7 +67,7 @@ public class RequiredPart {
     }
     
     public void subtractFromQuantity(int count) {
-        this.quantity = quantity+count;
+        this.quantity = quantity-count;
     }
     
     public void setItemPrice(double itemPrice) {
@@ -76,6 +77,13 @@ public class RequiredPart {
     
     public double getItemPrice() {
     	return this.itemPrice;
+    }
+    
+    public void setExpectedDeliveryDuration(int expectedDeliveryDuration) {
+        this.expectedDeliveryDuration = expectedDeliveryDuration;
+    }
+    public int getExpectedDeliveryDuration() {
+        return expectedDeliveryDuration;
     }
 
     @Override

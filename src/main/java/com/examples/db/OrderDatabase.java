@@ -64,13 +64,15 @@ public class OrderDatabase {
         return matchingOrders;
     }
     
-    public static List<Order> searchOrdersInPastXDays(int X){
+    public static List<Order> searchOrdersInPastXDays(int X, int partTypeID){
     	List<Order> matchingOrders = new ArrayList<>();
         for (Order order : orders.values()) {
-            if (Utils.daysFromDate(order.getOrderDate())<=X) {
+            if (order.getPartTypeID()==partTypeID &&Utils.daysFromDate(order.getOrderDate())<=X) {
                 matchingOrders.add(order);
             }
         }
         return matchingOrders;
     }
+    
+    
 }

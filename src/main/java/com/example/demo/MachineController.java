@@ -123,13 +123,31 @@ public class MachineController {
 		}else return "Machine Part Updated!\n"+updatedMachinePart;
 	}
 	
-	
+	@PutMapping(path="machine/{machineSerialNum}/parts/{SerialNumber}")
+	public String updateMachinePart(@PathVariable("machineSerialNum") String machineSerialNum, @PathVariable("SerialNumber") String SerialNumber, @RequestBody MachinePart machinePart) {
+		
+		if  (!SerialNumber.equals(machinePart.getSerialNumber()))
+			return "Can't change serial number";
+		MachinePart updatedMachinePart=machineService.updateMachinePart(machinePart);
+		if(updatedMachinePart==null) {
+			return "This machine part doesn't exist";
+		}else return "Machine Part Updated!\n"+updatedMachinePart;
+	}
 	@DeleteMapping(path="parts/{SerialNumber}")
 	public String deleteMachinePart(@PathVariable("SerialNumber") String SerialNumber) {
 		if (machineService.deleteMachinePart(SerialNumber))
 			return "Machine Part Deleted";
 		else return "Machine Part doesn't exist";
 	}
+	@DeleteMapping(path="machine/{machineSerialNum}/parts/{SerialNumber}")
+	public String deleteMachinePart(@PathVariable("machineSerialNum") String machineSerialNum,
+			@PathVariable("SerialNumber") String SerialNumber ) {
+		if (machineService.deleteMachinePart(SerialNumber))
+			return "Machine Part Deleted";
+		else return "Machine Part doesn't exist";
+	}
+	
+
 	
 	@DeleteMapping(path="{machineSerialNumber}")
 	public String deleteMachine(@PathVariable("machineSerialNumber") String machineSerialNumber) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-
+import com.examples.applogic.Email;
 import com.examples.applogic.Order;
 import com.examples.applogic.OrderService;
 
@@ -24,8 +24,10 @@ public class OrderController {
 	public List<Order> getOrders() {
         return orderService.getOrders();
     }
-	@GetMapping("weekly")
-	public List<Order> getWeeklyOrders() {
+	
+	//dummy function
+	@GetMapping("required_emails")
+	public List<Email> getWeeklyOrders() {
         return orderService.weeklyOrders();
     }
 	

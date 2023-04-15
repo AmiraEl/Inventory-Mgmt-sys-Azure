@@ -22,22 +22,42 @@ public class OrderService {
     	supplierService=new SupplierService();
     }
     
-    
+    //dummy function
     //@Scheduled(cron = "0 0 0 * * MON") 
-    public List<Order> weeklyOrders(){
-    	List<Order> orders=new ArrayList<>();
+    public List<Email> weeklyOrders(){
+    	List<Email> orderEmails=new ArrayList<>();
     	List<RequiredPart> requiredParts=machineService.getPartsToOrder(7);
     	for (RequiredPart requiredPart: requiredParts) {
     		Supplier supplier=supplierService.getSupplier(requiredPart.getSupplierID());
-    		Order order=requiredPart.toOrder(supplier.getDeliveryCharge(),"email","");
-    		orders.add(order);
-    		this.addOrder(order);
+    		int deliveryDuration=requiredPart.getExpectedDeliveryDuration();
+    		int partTypeID=requiredPart.getPartTypeID();
+    		List<Order> pastPartOrders=OrderDatabase.searchOrdersInPastXDays(deliveryDuration, partTypeID);
+    		for (Order order:pastPartOrders) {
+    			if (requiredPart.getQuantity()>0) {
+    				requiredPart.subtractFromQuantity(order.getQuantity());
+    			} else break;
+    		}
+    		if (requiredPart.getQuantity()>0) {
+    			Order order=requiredPart.toOrder(supplier.getDeliveryCharge(),"email","");
+    			Email email=generateOrderEmail(order,supplier);
+    			orderEmails.add(email);
+    			this.addOrder(order);
+
+    		}
+    		
+    		
     	}
-    	return orders;
+    	return orderEmails;
     }
     
-    public boolean sendOrderEmail(Order order) {
-    	return true;
+    //incomplete function
+    public Email generateOrderEmail(Order order, Supplier supplier) {
+    	
+    		String subject="Ordering "+ order.getPartName();
+    		String body="Dear "+supplier.getName()+", \n"+"We would like to order "+order.getQuantity()
+    		+" of the part "+ order.getPartName()+" \n Thank you!";
+    	 return new Email(supplier.getEmail(), subject, body);
+    	
     }
     public List<Order> getOrders() {
         return OrderDatabase.getOrders();
@@ -58,8 +78,8 @@ public class OrderService {
     public List<Order> searchOrdersByPartTypeId(int partTypeId) {
         return OrderDatabase.searchOrdersByPartTypeId(partTypeId);
     }
-    public List<Order> searchOrdersInPastXDays(int X){
-    	return OrderDatabase.searchOrdersInPastXDays(X);
+    public List<Order> searchOrdersInPastXDays(int X, int partTypeID){
+    	return OrderDatabase.searchOrdersInPastXDays(X, partTypeID);
     }
 
     public Order updateOrder(Order order) {
