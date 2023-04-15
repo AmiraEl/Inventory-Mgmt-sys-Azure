@@ -62,4 +62,23 @@ public class InventoryService {
 	public boolean deleteSparePart(String serialNum) {
 		return InventoryDatabase.deleteSparePart(serialNum);
 	}
+	
+	public boolean reserveSparePart(int partTypeID, String machineSerialNum) {
+		List<SparePart> spareParts =InventoryDatabase.searchSparePartByPartTypeID(partTypeID);
+		for (SparePart sparePart: spareParts) {
+			if (sparePart.isReserved()) {
+				if (sparePart.getReservedMachineSerialNum().equals(machineSerialNum)){
+					return true;
+				}
+			} else {
+				sparePart.setReserved(true);
+				sparePart.setReservedMachineSerialNum(machineSerialNum);
+				InventoryDatabase.updateSparePart(sparePart);
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
 }

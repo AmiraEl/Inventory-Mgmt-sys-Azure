@@ -90,6 +90,17 @@ private static Map<String,MachinePart> machineParts=new HashMap<>();
 	    return matchingMachineParts;
 	}
 	
+
+	
+	public static List<MachinePart> searchMachinePartByPartTypeID(int partTypeID) {
+	    List<MachinePart> matchingMachineParts = new ArrayList<>();
+	    for (MachinePart machinePart : machineParts.values()) {
+	        if (machinePart.getPartTypeID()==partTypeID) {
+	            matchingMachineParts.add(machinePart);
+	        }
+	    }
+	    return matchingMachineParts;
+	}
 	public static Machine updateMachine(Machine machine) {
 	    if (machines.containsKey(machine.getMachineSerialNumber())) {
 	        machines.put(machine.getMachineSerialNumber(), machine);

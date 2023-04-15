@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examples.applogic.MachineService;
+import com.examples.applogic.RequiredPart;
 import com.examples.applogic.Machine;
 import com.examples.applogic.MachinePart;
 
@@ -91,6 +92,13 @@ public class MachineController {
 		
 	}
 	
+	@GetMapping(path="required_parts")
+	public List<RequiredPart> getPartsToOrder(@RequestBody int daysAhead){
+		
+		
+		return machineService.getPartsToOrder(daysAhead);
+	}
+	
 	
 	@PutMapping(path="{machineSerialNumber}")
 	public String updateMachine(@PathVariable("machineSerialNumber") String machineSerialNumber, @RequestBody Machine machine) {
@@ -115,7 +123,7 @@ public class MachineController {
 	}
 	
 	
-	@DeleteMapping(path="{SerialNumber}")
+	@DeleteMapping(path="parts/{SerialNumber}")
 	public String deleteMachinePart(@PathVariable("SerialNumber") String SerialNumber) {
 		if (machineService.deleteMachinePart(SerialNumber))
 			return "Machine Part Deleted";
@@ -128,6 +136,8 @@ public class MachineController {
 			return "Machine Deleted";
 		else return "Machine doesn't exist";
 	}
+	
+	
 	
 
 		

@@ -1,10 +1,18 @@
 package com.examples.applogic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.examples.db.MachineDatabase;
 
 public class MachineService {
+	
+	private InventoryService inventoryService;
+	
+	public MachineService() {
+		inventoryService=new InventoryService();
+	}
 	
 	
 	public Machine getMachine(String serialNumber) {
@@ -56,6 +64,47 @@ public class MachineService {
 	
 	public boolean deleteMachinePart(String SerialNumber) {
 	    return MachineDatabase.deleteMachinePart(SerialNumber);
+	}
+	
+	public List<MachinePart> searchMachinePartByPartTypeID(int partTypeID){
+		return MachineDatabase.searchMachinePartByPartTypeID(partTypeID);
+	}
+	
+	public List<RequiredPart> getPartsToOrder(int daysAhead){
+		List<RequiredPart> requiredParts=new ArrayList<>();
+		
+		List<PartType> partTypes=inventoryService.getPartTypes();
+		
+		for (PartType partType: partTypes) {
+			RequiredPart requiredPart=new RequiredPart(partType, 0);
+			
+				
+			List<MachinePart> machineParts=MachineDatabase.searchMachinePartByPartTypeID(partType.getPartTypeID());
+				
+			for(MachinePart machinePart: machineParts) {
+				
+
+					long daysLeft=partType.getLifetime() - Utils.daysFromDate(machinePart.getInstallationDate());
+					daysLeft=daysLeft-partType.getExpectedDeliveryDuration();
+					if (machinePart.isFaulty() || daysLeft<daysAhead) {
+						boolean reservedPart=inventoryService.reserveSparePart(machinePart.getPartTypeID(), machinePart.getMachineSerialNumber());
+						if (!reservedPart)
+							requiredPart.incremetQuantity();
+							
+					}
+					
+			}
+				
+			if (requiredPart.getQuantity()>0)
+				requiredParts.add(requiredPart);
+		}
+		
+		
+		
+		
+		
+		
+		return requiredParts;
 	}
 	
 	

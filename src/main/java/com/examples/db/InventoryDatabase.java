@@ -90,6 +90,7 @@ public class InventoryDatabase {
 	    return matchingSpareParts;
 	}
 	
+	
 	public static SparePart updateSparePart(SparePart sparePart) {
 		if (spareParts.containsKey(sparePart.getSerialNumber())) {
 			spareParts.put(sparePart.getSerialNumber(), sparePart);
