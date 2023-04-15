@@ -9,8 +9,8 @@ public class PartType {
     private int supplierID;
 
 
-    public PartType(int partTypeID, String partName, int lifetime, int expectedDeliveryDuration, double price, int supplierID) {
-        this.partTypeID = partTypeID;
+    public PartType( String partName, int lifetime, int expectedDeliveryDuration, double price, int supplierID) {
+       
         this.partName = partName;
         this.lifetime = lifetime;
         this.expectedDeliveryDuration = expectedDeliveryDuration;

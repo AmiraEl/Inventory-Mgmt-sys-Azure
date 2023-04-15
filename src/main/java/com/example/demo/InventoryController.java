@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.examples.applogic.InventoryService;
 import com.examples.applogic.PartType;
-import com.examples.applogic.PartTypeRequest;
+
 import com.examples.applogic.SparePart;
 
 
@@ -29,8 +29,8 @@ public class InventoryController {
 	}
 	
 	@PostMapping(path="part_types")
-	public PartType addPartType(@RequestBody PartTypeRequest partTypeRequest) {
-		PartType partType=partTypeRequest.convert();
+	public PartType addPartType(@RequestBody PartType partType) {
+		
 	
 		return inventoryService.addPartType(partType);
 	}
@@ -54,8 +54,7 @@ public class InventoryController {
 	@PutMapping(path="part_types/{partTypeID}")
 	public String updatePartType(@PathVariable("partTypeID")int partTypeID, @RequestBody PartType partType) {
 		
-		if (partType.getPartTypeID()!=partTypeID)
-			return "can't change part type ID";
+		partType.setPartTypeID(partTypeID);
 		PartType updatedPartType=inventoryService.updatePartType(partType);
 		if (updatedPartType==null)
 			return "part type doesn't exist";
@@ -87,7 +86,7 @@ public class InventoryController {
 		
 	}
 	
-	@GetMapping(path="spare_parts/part_type_id/{partTypeID}")
+	@GetMapping(path="spare_parts/part_type/{partTypeID}")
 	public List<SparePart> searchSparePartByPartTypeID(@PathVariable("partTypeID")int partTypeID) {
 	    return inventoryService.searchSparePartByPartTypeID(partTypeID);
 	}
