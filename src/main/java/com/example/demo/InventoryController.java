@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examples.applogic.InventoryService;
 import com.examples.applogic.PartType;
 import com.examples.applogic.PartTypeRequest;
-import com.examples.db.InventoryDatabase;
+import com.examples.applogic.SparePart;
+
 
 
 @RestController
@@ -46,8 +47,8 @@ public class InventoryController {
 	}
 	
 	@GetMapping(path="part_types/supplier/{supplierID}")
-	public List<PartType> searcPartTypeBySupplierID(@PathVariable("supplierID") int supplierID) {
-	    return inventoryService.searcPartTypeBySupplierID(supplierID);
+	public List<PartType> searchPartTypeBySupplierID(@PathVariable("supplierID") int supplierID) {
+	    return inventoryService.searchPartTypeBySupplierID(supplierID);
 	}
 	
 	@PutMapping(path="part_types/{partTypeID}")
@@ -63,9 +64,52 @@ public class InventoryController {
 	
 	@DeleteMapping(path="part_types/{partTypeID}")
 	public String deletePartType(@PathVariable("partTypeID")int partTypeID) {
-		if (InventoryDatabase.deletePartType(partTypeID))
+		if (inventoryService.deletePartType(partTypeID))
 			return "Deleted";
 		else return "Part Type doesnt exist";
+	}
+	@GetMapping(path="spare_parts")
+	public List<SparePart> getSpareParts() {
+	    return inventoryService.getSpareParts();
+	}
+	
+	@GetMapping(path="spare_parts/{serialNum}")
+	public SparePart getSparePart(@PathVariable("serialNum")String serialNum) {
+		return inventoryService.getSparePart(serialNum);
+	}
+	@PostMapping(path="spare_parts")
+	public String addSparePart(@RequestBody SparePart sparePart) {
+		
+		SparePart addedSparePart=inventoryService.addSparePart(sparePart);
+		if (addedSparePart==null)
+			return "Spare Part already exists";
+		else return addedSparePart.toString();
+		
+	}
+	
+	@GetMapping(path="spare_parts/part_type_id/{partTypeID}")
+	public List<SparePart> searchSparePartByPartTypeID(@PathVariable("partTypeID")int partTypeID) {
+	    return inventoryService.searchSparePartByPartTypeID(partTypeID);
+	}
+	
+	
+	@PutMapping(path="spare_parts/{serialNum}")
+	public String updateSparePart(@PathVariable("serialNum") String serialNum, @RequestBody SparePart sparePart) {
+		
+		if (!sparePart.getSerialNumber().equals(serialNum))
+			return "can't change serial number";
+		
+		SparePart updatedSparePart=inventoryService.updateSparePart(sparePart);
+		if (updatedSparePart==null)
+			return "spare part doesn't exist";
+		else return updatedSparePart.toString();
+			
+	}
+	@DeleteMapping(path="spare_parts/{serialNum}")
+	public String deleteSparePart(@PathVariable("serialNum")String serialNum) {
+		if (inventoryService.deleteSparePart(serialNum))
+			return "Deleted";
+		else return "Spare part doesn't exist";
 	}
 	
 	

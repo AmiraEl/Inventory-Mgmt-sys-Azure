@@ -25,8 +25,8 @@ public class InventoryService {
 		return InventoryDatabase.addPartType(partType);
 	}
 	
-	public List<PartType> searcPartTypeBySupplierID(int supplierID) {
-	    return InventoryDatabase.searcPartTypeBySupplierID(supplierID);
+	public List<PartType> searchPartTypeBySupplierID(int supplierID) {
+	    return InventoryDatabase.searchPartTypeBySupplierID(supplierID);
 	}
 	
 	public PartType updatePartType(PartType partType) {
@@ -37,4 +37,29 @@ public class InventoryService {
 		return InventoryDatabase.deletePartType(partTypeID);
 	}
 	
+	public List<SparePart> getSpareParts() {
+	    return InventoryDatabase.getSpareParts();
+	}
+	
+	public SparePart getSparePart(String serialNum) {
+		return InventoryDatabase.getSparePart(serialNum);
+	}
+
+	public SparePart addSparePart(SparePart sparePart) {
+		
+		return InventoryDatabase.addSparePart(sparePart);
+		
+	}
+	
+	public List<SparePart> searchSparePartByPartTypeID(int partTypeID) {
+	    return InventoryDatabase.searchSparePartByPartTypeID(partTypeID);
+	}
+	
+	public SparePart updateSparePart(SparePart sparePart) {
+		return InventoryDatabase.updateSparePart(sparePart);
+	}
+	
+	public boolean deleteSparePart(String serialNum) {
+		return InventoryDatabase.deleteSparePart(serialNum);
+	}
 }
