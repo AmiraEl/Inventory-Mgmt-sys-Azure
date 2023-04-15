@@ -70,31 +70,44 @@ public class MachineService {
 		return MachineDatabase.searchMachinePartByPartTypeID(partTypeID);
 	}
 	
+	
+	public List<MachinePart> searchMachinePartByMachineSerialNumFromList(String serialNum, List <MachinePart>machineParts) {
+	    List<MachinePart> matchingMachineParts = new ArrayList<>();
+	    for (MachinePart machinePart : machineParts) {
+	        if (machinePart.getMachineSerialNumber().equals(serialNum)) {
+	            matchingMachineParts.add(machinePart);
+	        }
+	    }
+	    return matchingMachineParts;
+	}
 	public List<RequiredPart> getPartsToOrder(int daysAhead){
 		List<RequiredPart> requiredParts=new ArrayList<>();
 		
 		List<PartType> partTypes=inventoryService.getPartTypes();
-		
+		List<Machine> machines=this.getAllMachines();
 		for (PartType partType: partTypes) {
 			RequiredPart requiredPart=new RequiredPart(partType, 0);
 			
 				
 			List<MachinePart> machineParts=MachineDatabase.searchMachinePartByPartTypeID(partType.getPartTypeID());
-				
-			for(MachinePart machinePart: machineParts) {
-				
+			for (Machine machine : machines) {
+				List<MachinePart> machinePartsOfMachine=this.searchMachinePartByMachineSerialNumFromList(machine.getMachineSerialNumber(), machineParts);
+				int counter=0;
+				for(MachinePart machinePart: machinePartsOfMachine) {
+					
 
 					long daysLeft=partType.getLifetime() - Utils.daysFromDate(machinePart.getInstallationDate());
 					daysLeft=daysLeft-partType.getExpectedDeliveryDuration();
 					if (machinePart.isFaulty() || daysLeft<daysAhead) {
-						boolean reservedPart=inventoryService.reserveSparePart(machinePart.getPartTypeID(), machinePart.getMachineSerialNumber());
-						if (!reservedPart)
-							requiredPart.incremetQuantity();
+						counter+=1;
 							
 					}
 					
-			}
+				}
+				counter-=inventoryService.reserveSpareParts(partType.getPartTypeID(), machine.getMachineSerialNumber(),counter );
+				requiredPart.addToQuantity(counter);
 				
+			}	
 			if (requiredPart.getQuantity()>0)
 				requiredParts.add(requiredPart);
 		}

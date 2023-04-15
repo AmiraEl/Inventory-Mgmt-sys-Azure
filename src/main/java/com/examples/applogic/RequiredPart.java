@@ -53,8 +53,8 @@ public class RequiredPart {
         this.quantity = quantity;
     }
     
-    public void incremetQuantity() {
-        this.quantity = quantity+1;
+    public void addToQuantity(int count) {
+        this.quantity = quantity+count;
     }
     
     public void setItemPrice(double itemPrice) {

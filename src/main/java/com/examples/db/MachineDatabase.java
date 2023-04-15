@@ -90,7 +90,7 @@ private static Map<String,MachinePart> machineParts=new HashMap<>();
 	    return matchingMachineParts;
 	}
 	
-
+	
 	
 	public static List<MachinePart> searchMachinePartByPartTypeID(int partTypeID) {
 	    List<MachinePart> matchingMachineParts = new ArrayList<>();
