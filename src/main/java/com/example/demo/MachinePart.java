@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.text.ParseException;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class MachinePart {
     @Id
     private String serialNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_type_id")
     private PartType partType;
 
