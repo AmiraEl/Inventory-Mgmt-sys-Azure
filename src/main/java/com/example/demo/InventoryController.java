@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examples.applogic.InventoryService;
-import com.examples.applogic.PartType;
-
-import com.examples.applogic.SparePart;
-
 
 
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
+	
+	
+	@Autowired
 	private InventoryService inventoryService;
 	
 	
@@ -37,13 +36,13 @@ public class InventoryController {
 	
 	@GetMapping(path="part_types")
 	public List<PartType> getPartTypes(){
-		return inventoryService.getPartTypes();
+		return inventoryService.getAllPartTypes();
 	}
 	
 	
 	@GetMapping(path="part_types/{partTypeID}")
 	public PartType getPartType(@PathVariable("partTypeID")int partTypeID){
-		return inventoryService.getPartType(partTypeID);
+		return inventoryService.getPartTypeById(partTypeID);
 	}
 	
 	@GetMapping(path="part_types/supplier/{supplierID}")
@@ -54,7 +53,7 @@ public class InventoryController {
 	@PutMapping(path="part_types/{partTypeID}")
 	public String updatePartType(@PathVariable("partTypeID")int partTypeID, @RequestBody PartType partType) {
 		
-		partType.setPartTypeID(partTypeID);
+		partType.setId(partTypeID);
 		PartType updatedPartType=inventoryService.updatePartType(partType);
 		if (updatedPartType==null)
 			return "part type doesn't exist";
@@ -62,19 +61,18 @@ public class InventoryController {
 	}
 	
 	@DeleteMapping(path="part_types/{partTypeID}")
-	public String deletePartType(@PathVariable("partTypeID")int partTypeID) {
-		if (inventoryService.deletePartType(partTypeID))
-			return "Deleted";
-		else return "Part Type doesnt exist";
+	public void deletePartType(@PathVariable("partTypeID")int partTypeID) {
+		inventoryService.deletePartType(partTypeID);
+		
 	}
 	@GetMapping(path="spare_parts")
 	public List<SparePart> getSpareParts() {
-	    return inventoryService.getSpareParts();
+	    return inventoryService.getAllSpareParts();
 	}
 	
 	@GetMapping(path="spare_parts/{serialNum}")
-	public SparePart getSparePart(@PathVariable("serialNum")String serialNum) {
-		return inventoryService.getSparePart(serialNum);
+	public SparePart getSparePartBySerialNumber(@PathVariable("serialNum")String serialNum) {
+		return inventoryService.getSparePartBySerialNumber(serialNum);
 	}
 	@PostMapping(path="spare_parts")
 	public String addSparePart(@RequestBody SparePart sparePart) {
@@ -105,10 +103,9 @@ public class InventoryController {
 			
 	}
 	@DeleteMapping(path="spare_parts/{serialNum}")
-	public String deleteSparePart(@PathVariable("serialNum")String serialNum) {
-		if (inventoryService.deleteSparePart(serialNum))
-			return "Deleted";
-		else return "Spare part doesn't exist";
+	public void deleteSparePart(@PathVariable("serialNum")String serialNum) {
+		inventoryService.deleteSparePart(serialNum);
+			
 	}
 	
 	

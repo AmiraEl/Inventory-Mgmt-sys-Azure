@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import com.examples.applogic.PartType;
-import com.examples.applogic.SparePart;
+import com.example.demo.PartType;
+import com.example.demo.SparePart;
 
 public class InventoryDatabase {
-	private static Map<Integer, PartType> partTypes=new HashMap<>();
+	/*private static Map<Integer, PartType> partTypes=new HashMap<>();
 	private static Map<String, SparePart> spareParts=new HashMap<>();
 	
 	
@@ -108,7 +107,7 @@ public class InventoryDatabase {
 		else return false;
 	}
 	
-	
+	*/
 	
 	
 }

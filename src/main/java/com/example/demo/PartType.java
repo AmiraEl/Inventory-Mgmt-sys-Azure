@@ -1,16 +1,28 @@
-package com.examples.applogic;
+package com.example.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Data
 public class PartType {
-    private int partTypeID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String partName;
     private int lifetime;
     private int expectedDeliveryDuration;
     private double price;
     private int supplierID;
 
+    public PartType() {}
 
-    public PartType( String partName, int lifetime, int expectedDeliveryDuration, double price, int supplierID) {
-       
+    public PartType(String partName, int lifetime, int expectedDeliveryDuration, double price, int supplierID) {
         this.partName = partName;
         this.lifetime = lifetime;
         this.expectedDeliveryDuration = expectedDeliveryDuration;
@@ -18,9 +30,8 @@ public class PartType {
         this.supplierID = supplierID;
     }
     
-    
-    public int getPartTypeID() {
-        return partTypeID;
+    public int getId() {
+        return id;
     }
 
     public String getPartName() {
@@ -43,9 +54,8 @@ public class PartType {
         return supplierID;
     }
 
-
-    public void setPartTypeID(int partTypeID) {
-        this.partTypeID = partTypeID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setPartName(String partName) {
@@ -67,8 +77,10 @@ public class PartType {
     public void setSupplierID(int supplierID) {
         this.supplierID = supplierID;
     }
+
+    @Override
     public String toString() {
-        return "Part Type ID: " + partTypeID + "\n" +
+        return "Part Type ID: " + id + "\n" +
                "Part Name: " + partName + "\n" +
                "Lifetime: " + lifetime + "\n" +
                "Expected Delivery Duration: " + expectedDeliveryDuration + "\n" +
@@ -76,4 +88,3 @@ public class PartType {
                "Supplier ID: " + supplierID + "\n";
     }
 }
-

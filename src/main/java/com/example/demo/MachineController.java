@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,20 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examples.applogic.MachineService;
-import com.examples.applogic.RequiredPart;
-import com.examples.applogic.Machine;
-import com.examples.applogic.MachinePart;
-
 @RestController
 @RequestMapping("/machines")
 public class MachineController {
 	
+	@Autowired
 	private MachineService machineService;
 	
-	public MachineController() {
-		machineService=new MachineService();
-	}
 	
 	@GetMapping
 	public List<Machine> getMachines(){
@@ -92,7 +86,7 @@ public class MachineController {
 		
 	}
 	
-	//dummy function
+	
 	@GetMapping(path="required_parts")
 	public List<RequiredPart> getPartsToOrder(@RequestBody int daysAhead){
 		
@@ -155,6 +149,10 @@ public class MachineController {
 			return "Machine Deleted";
 		else return "Machine doesn't exist";
 	}
+	
+	
+	
+	
 	
 	
 	

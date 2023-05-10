@@ -1,81 +1,88 @@
-package com.examples.applogic;
-
+package com.example.demo;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.examples.db.MachineDatabase;
-
+import com.example.demo.MachinePartRepository;
+import com.example.demo.MachineRepository;
+import com.example.demo.InventoryService;
+import com.example.demo.PartType;
 
 @Service
 public class MachineService {
 	
+	@Autowired
+	private MachineRepository machineRepository;
 	
+	@Autowired
+	private MachinePartRepository machinePartRepository;
+	
+	@Autowired
 	private InventoryService inventoryService;
-	
-	public MachineService() {
-		inventoryService=new InventoryService();
-	}
-	
-	
+
 	public Machine getMachine(String serialNumber) {
-		return MachineDatabase.getMachine(serialNumber);
+		return machineRepository.getMachineBySerialNumber(serialNumber);
 	}
+	
 	public MachinePart getMachinePart(String serialNumber) {
-		return MachineDatabase.getMachinePart(serialNumber);
+		return machinePartRepository.getMachinePartBySerialNumber(serialNumber);
 	}
+	
 	public List<MachinePart> getMachineParts(){
-		return MachineDatabase.getMachineParts();
+		return machinePartRepository.findAll();
 	}
+	
 	public List<Machine> getAllMachines(){
-		return MachineDatabase.getMachines();
+		return machineRepository.findAll();
 	}
 	
 	public List<Machine> searchMachineByType(String type){
-		return MachineDatabase.searchMachineByType(type);
+		return machineRepository.searchMachineByType(type);
 	}
 	
 	public List<MachinePart> searchMachinePartByMachineSerialNum(String serialNum){
-		return MachineDatabase.searchMachinePartByMachineSerialNum(serialNum);
+		return machinePartRepository.searchMachinePartByMachineSerialNumber(serialNum);
 	}
+	
 	public List<String> getMachineTypes(){
-		return MachineDatabase.getMachineTypes();
+		return machineRepository.getMachineTypes();
 	}
 	
 	public List<Integer> getMachinePartTypeIDs(){
-		return MachineDatabase.getMachinePartTypeIDs();
-	}
-	public Machine addMachine(Machine machine) {
-		return MachineDatabase.addMachine(machine);
+		return machinePartRepository.getMachinePartTypeIDs();
 	}
 	
+	public Machine addMachine(Machine machine) {
+		return machineRepository.save(machine);
+	}
 	
 	public MachinePart addMachinePart(MachinePart machinePart) {
-		return MachineDatabase.addMachinePart(machinePart);
+		return machinePartRepository.save(machinePart);
 	}
 	
 	public Machine updateMachine(Machine machine) {
-		return MachineDatabase.updateMachine(machine);
+		return machineRepository.save(machine);
 	}
+	
 	public MachinePart updateMachinePart(MachinePart machinePart) {
-		return MachineDatabase.updateMachinePart(machinePart);
+		return machinePartRepository.save(machinePart);
 	}
 	
 	public boolean deleteMachine(String serialNumber) {
-		return MachineDatabase.deleteMachine(serialNumber);
+		machineRepository.deleteMachine(serialNumber);
+		return true;
 	}
 	
-	public boolean deleteMachinePart(String SerialNumber) {
-	    return MachineDatabase.deleteMachinePart(SerialNumber);
+	public boolean deleteMachinePart(String serialNumber) {
+	    machinePartRepository.deleteMachinePart(serialNumber);
+	    return true;
 	}
 	
 	public List<MachinePart> searchMachinePartByPartTypeID(int partTypeID){
-		return MachineDatabase.searchMachinePartByPartTypeID(partTypeID);
+		return machinePartRepository.searchMachinePartByPartTypeID(partTypeID);
 	}
-	
 	
 	public List<MachinePart> searchMachinePartByMachineSerialNumFromList(String serialNum, List <MachinePart>machineParts) {
 	    List<MachinePart> matchingMachineParts = new ArrayList<>();
@@ -86,16 +93,17 @@ public class MachineService {
 	    }
 	    return matchingMachineParts;
 	}
+	
 	public List<RequiredPart> getPartsToOrder(int daysAhead){
 		List<RequiredPart> requiredParts=new ArrayList<>();
 		
-		List<PartType> partTypes=inventoryService.getPartTypes();
+		List<PartType> partTypes=inventoryService.getAllPartTypes();
 		List<Machine> machines=this.getAllMachines();
 		for (PartType partType: partTypes) {
 			RequiredPart requiredPart=new RequiredPart(partType, 0);
 			
 				
-			List<MachinePart> machineParts=MachineDatabase.searchMachinePartByPartTypeID(partType.getPartTypeID());
+			List<MachinePart> machineParts=machinePartRepository.searchMachinePartByPartTypeID(partType.getId());
 			for (Machine machine : machines) {
 				List<MachinePart> machinePartsOfMachine=this.searchMachinePartByMachineSerialNumFromList(machine.getMachineSerialNumber(), machineParts);
 				int counter=0;
@@ -110,7 +118,7 @@ public class MachineService {
 					}
 					
 				}
-				counter-=inventoryService.reserveSpareParts(partType.getPartTypeID(), machine.getMachineSerialNumber(),counter );
+				counter-=inventoryService.reserveSpareParts(partType.getId(), machine.getMachineSerialNumber(),counter );
 				requiredPart.addToQuantity(counter);
 				
 			}	
@@ -126,7 +134,4 @@ public class MachineService {
 		return requiredParts;
 	}
 	
-	
-	
-
 }

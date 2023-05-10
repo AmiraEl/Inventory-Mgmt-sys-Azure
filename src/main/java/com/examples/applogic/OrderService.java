@@ -7,19 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.MachineService;
+import com.example.demo.RequiredPart;
 import com.examples.db.OrderDatabase;
 
 
 @Service
 public class OrderService {
 	
+	@Autowired
 	private MachineService machineService;
 	
-	
+	@Autowired
 	private SupplierService supplierService;
     public OrderService() {
-    	machineService=new MachineService();
-    	supplierService=new SupplierService();
+    	//machineService=new MachineService();
+    	//supplierService=new SupplierService();
     }
     
     //dummy function

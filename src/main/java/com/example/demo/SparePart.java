@@ -1,13 +1,38 @@
-package com.examples.applogic;
+package com.example.demo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Data
 public class SparePart {
-	
-	
-	private String serialNumber;
-	private int partTypeID;
-	private boolean reserved;
-	private String reservedMachineSerialNum;
-	
+    
+    @Id
+ 
+    private String serialNumber;
+    
+  
+    private int partTypeID;
+    
+   
+    private boolean reserved;
+    
+    
+    private String reservedMachineSerialNum;
+
+    public SparePart() {}
+    
+    public SparePart(String serialNumber, int partTypeID, boolean reserved, String reservedMachineSerialNum) {
+        this.serialNumber = serialNumber;
+        this.partTypeID = partTypeID;
+        this.reserved = reserved;
+        this.reservedMachineSerialNum = reservedMachineSerialNum;
+    }
+
     public String getSerialNumber() {
         return serialNumber;
     }

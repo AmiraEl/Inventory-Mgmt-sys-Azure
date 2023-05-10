@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.examples.applogic.Machine;
-import com.examples.applogic.MachinePart;
+import com.example.demo.Machine;
+import com.example.demo.MachinePart;
 
 public class MachineDatabase {
 	
@@ -27,7 +27,7 @@ private static Map<String,MachinePart> machineParts=new HashMap<>();
 	public static List<Integer> getMachinePartTypeIDs() {
 	    Set<Integer> types = new HashSet<>();
 	    for (MachinePart machinePart : machineParts.values()) {
-	        types.add(machinePart.getPartTypeID());
+	        types.add(machinePart.getPartType().getId());
 	    }
 	    return new ArrayList<>(types);
 	}
@@ -95,7 +95,7 @@ private static Map<String,MachinePart> machineParts=new HashMap<>();
 	public static List<MachinePart> searchMachinePartByPartTypeID(int partTypeID) {
 	    List<MachinePart> matchingMachineParts = new ArrayList<>();
 	    for (MachinePart machinePart : machineParts.values()) {
-	        if (machinePart.getPartTypeID()==partTypeID) {
+	        if (machinePart.getPartType().getId()==partTypeID) {
 	            matchingMachineParts.add(machinePart);
 	        }
 	    }

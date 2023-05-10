@@ -1,6 +1,8 @@
-package com.examples.applogic;
+package com.example.demo;
 
 import java.text.ParseException;
+
+import com.examples.applogic.Order;
 
 public class RequiredPart {
     
@@ -16,7 +18,7 @@ public class RequiredPart {
     }
 
     public RequiredPart(PartType partType, int quantity) {
-        this.partTypeID = partType.getPartTypeID();
+        this.partTypeID = partType.getId();
         this.partName = partType.getPartName();
         this.supplierID = partType.getSupplierID();
         this.itemPrice=partType.getPrice();
