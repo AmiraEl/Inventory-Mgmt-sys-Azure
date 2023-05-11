@@ -1,8 +1,9 @@
-package com.example.machineservice;
+package com.example.inventoryservice;
 
 import lombok.Data;
 
 import jakarta.persistence.*;
+
 @Entity
 @Data
 public class SparePart {

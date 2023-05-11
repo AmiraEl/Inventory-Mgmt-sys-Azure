@@ -1,6 +1,6 @@
 package com.example.machineservice;
 
-import com.examples.applogic.Order;
+import com.example.machineservice.Order;
 
 public class RequiredPart {
     
