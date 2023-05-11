@@ -1,18 +1,40 @@
-package com.examples.applogic;
+package com.example.demo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Supplier {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private int ID;
+
+    
     private String name;
+
+ 
     private String email;
+
+
     private String phoneNumber;
+
+
     private String website;
+
+
     private String address;
+
+
     private double deliveryCharge;
 
-    public Supplier(){
-
+    public Supplier() {
     }
-    
 
     public Supplier(String name, String email, String phoneNumber, String website, String address, double deliveryCharge) {
         this.name = name;
@@ -22,7 +44,7 @@ public class Supplier {
         this.address = address;
         this.deliveryCharge = deliveryCharge;
     }
-    
+
     public int getID() {
         return ID;
     }
@@ -70,6 +92,7 @@ public class Supplier {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public double getDeliveryCharge() {
         return deliveryCharge;
     }

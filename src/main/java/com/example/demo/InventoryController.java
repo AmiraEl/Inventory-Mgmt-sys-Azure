@@ -1,6 +1,9 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.PartType;
 
 
 
@@ -107,6 +113,15 @@ public class InventoryController {
 		inventoryService.deleteSparePart(serialNum);
 			
 	}
+	@PostMapping(path="spare_parts_reservation")
+	public int reserveSpareParts(@RequestBody Map<String, Object> request) throws IOException, URISyntaxException {
+	    int partTypeID = (int) request.get("partTypeID");
+	    String machineSerialNum = (String) request.get("machineSerialNum");
+	    int quantityNeeded = (int) request.get("quantityNeeded");
+	    return inventoryService.reserveSpareParts(partTypeID, machineSerialNum, quantityNeeded);
+	}
+
+	
 	
 	
 }

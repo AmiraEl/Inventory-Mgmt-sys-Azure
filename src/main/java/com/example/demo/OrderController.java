@@ -1,12 +1,12 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import com.examples.applogic.Email;
-import com.examples.applogic.Order;
-import com.examples.applogic.OrderService;
 
 
 
@@ -14,6 +14,7 @@ import com.examples.applogic.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
 	
+	@Autowired
 	private OrderService orderService;
 	
 	public OrderController() {
@@ -27,7 +28,7 @@ public class OrderController {
 	
 	//dummy function
 	@GetMapping("required_emails")
-	public List<Email> getWeeklyOrders() {
+	public List<Email> getWeeklyOrders() throws ParseException, IOException, URISyntaxException {
         return orderService.weeklyOrders();
     }
 	

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,19 +22,19 @@ import java.text.ParseException;
 
 @Entity
 @Data
+@Table(name="machinepart")
 public class MachinePart {
 
     @Id
     private String serialNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "part_type_id")
-    private PartType partType;
+    @Column(name="part_type_id")
+    private int partTypeID;
 
-    @Column(name = "installation_date")
+    
     private Date installationDate;
 
-    @Column(name = "machine_serial_number")
+    
     private String machineSerialNumber;
 
     private boolean faulty;
@@ -42,9 +43,9 @@ public class MachinePart {
         // Required by JPA
     }
 
-    public MachinePart(String serialNumber, PartType partType, Date installationDate, boolean faulty, String machineSerialNumber) {
+    public MachinePart(String serialNumber, int partTypeId, Date installationDate, boolean faulty, String machineSerialNumber) {
         this.serialNumber = serialNumber;
-        this.partType = partType;
+        this.partTypeID=partTypeId;
         this.installationDate = installationDate;
         this.faulty = faulty;
         this.machineSerialNumber = machineSerialNumber;
@@ -60,12 +61,12 @@ public class MachinePart {
         this.serialNumber = serialNumber;
     }
 
-    public PartType getPartType() {
-        return partType;
+    public int getPartTypeID() {
+        return partTypeID;
     }
 
-    public void setPartType(PartType partType) {
-        this.partType = partType;
+    public void setPartTypeID(int id) {
+        this.partTypeID = id;
     }
 
     public Date getInstallationDate() {
@@ -94,7 +95,7 @@ public class MachinePart {
 
     public String toString() {
         return "Serial Number: " + serialNumber + "\n"
-                + "Part Type: " + partType + "\n"
+                + "Part Type ID: " + partTypeID + "\n"
                 + "Installation Date: " + installationDate + "\n"
                 + "Faulty: " + faulty + "\n"
                 + "Machine Serial Number: " + machineSerialNumber + "\n";

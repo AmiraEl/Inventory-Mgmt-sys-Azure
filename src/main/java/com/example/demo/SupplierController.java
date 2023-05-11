@@ -1,7 +1,6 @@
 package com.example.demo;
 
-import com.examples.applogic.Supplier;
-import com.examples.applogic.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/suppliers")
 public class SupplierController {
+	
+	@Autowired
     private SupplierService SupplierService;
 
     public SupplierController() {
@@ -26,10 +27,7 @@ public class SupplierController {
         return SupplierService.getSupplier(SupplierID);
     }
 
-    /*@GetMapping(path = "/querySearch")
-    public List<Supplier> searchSupplier(@RequestBody Supplier Supplier) {
-        return SupplierService.searchSupplier(Supplier);
-    }*/
+   
 
     @PostMapping
     public String addSupplier(@RequestBody Supplier Supplier) {

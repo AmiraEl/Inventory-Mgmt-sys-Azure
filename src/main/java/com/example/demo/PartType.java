@@ -18,6 +18,7 @@ public class PartType {
     private int lifetime;
     private int expectedDeliveryDuration;
     private double price;
+    
     private int supplierID;
 
     public PartType() {}

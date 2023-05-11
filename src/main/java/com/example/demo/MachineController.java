@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,10 +90,10 @@ public class MachineController {
 	
 	
 	@GetMapping(path="required_parts")
-	public List<RequiredPart> getPartsToOrder(@RequestBody int daysAhead){
+	public List<RequiredPart> getPartsToOrder() throws IOException, URISyntaxException{
 		
 		
-		return machineService.getPartsToOrder(daysAhead);
+		return machineService.getPartsToOrder(7);
 	}
 	
 	

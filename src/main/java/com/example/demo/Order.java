@@ -1,15 +1,22 @@
-package com.examples.applogic;
+package com.example.demo;
 
-import java.text.ParseException;
+import javax.persistence.*;
+
+import lombok.Data;
+
 import java.util.Date;
 
-import com.example.demo.Utils;
-
+@Entity
+@Data
+@Table(name="orders")
 public class Order {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderID;
+
     private int partTypeID;
-    private String partName; 
+    private String partName;
     private int supplierID;
     private String orderMethod;
     private int quantity;
@@ -18,37 +25,16 @@ public class Order {
     private double itemsTotalPrice;
     private double deliveryCharge;
 
-    public Order(int partTypeID, String partName, int supplierID, String orderMethod, int quantity, String orderDate, double itemsTotalPrice, double deliveryCharge)  {
+    public Order() {}
+
+    public Order(int partTypeID, String partName, int supplierID, String orderMethod, int quantity, Date orderDate, double itemsTotalPrice, double deliveryCharge) {
         this.partTypeID = partTypeID;
         this.partName = partName;
         this.supplierID = supplierID;
         this.orderMethod = orderMethod;
         this.quantity = quantity;
-        
-        try {
-        
-        this.orderDate = Utils.parseDate(orderDate, "yyyy-MM-dd");}
-        catch(Exception e) {
-        	this.orderDate=new Date();
-        }
+        this.orderDate = orderDate;
         this.itemsTotalPrice = itemsTotalPrice;
-        this.deliveryCharge = deliveryCharge;
-    }
-
-    
-    public double getItemsTotalPrice() {
-        return itemsTotalPrice;
-    }
-
-    public void setItemsTotalPrice(double itemsTotalPrice) {
-        this.itemsTotalPrice = itemsTotalPrice;
-    }
-
-    public double getDeliveryCharge() {
-        return deliveryCharge;
-    }
-
-    public void setDeliveryCharge(double deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
     }
 
@@ -108,13 +94,34 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-   
-    @Override
-    public String toString() {
-        return "Order [orderID=" + orderID + ", partTypeID=" + partTypeID + ", partName=" + partName + ", supplierID=" + supplierID
-                + ", orderMethod=" + orderMethod + ", quantity=" + quantity + ", orderDate=" + orderDate
-                + ", itemsTotalPrice=" + itemsTotalPrice + ", deliveryCharge=" + deliveryCharge + "]";
+    public double getItemsTotalPrice() {
+        return itemsTotalPrice;
     }
 
+    public void setItemsTotalPrice(double itemsTotalPrice) {
+        this.itemsTotalPrice = itemsTotalPrice;
+    }
 
+    public double getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(double deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderID=" + orderID +
+                ", partTypeID=" + partTypeID +
+                ", partName='" + partName + '\'' +
+                ", supplierID=" + supplierID +
+                ", orderMethod='" + orderMethod + '\'' +
+                ", quantity=" + quantity +
+                ", orderDate=" + orderDate +
+                ", itemsTotalPrice=" + itemsTotalPrice +
+                ", deliveryCharge=" + deliveryCharge +
+                '}';
+    }
 }

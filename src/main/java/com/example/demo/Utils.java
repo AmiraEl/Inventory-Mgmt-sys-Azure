@@ -23,4 +23,10 @@ public class Utils {
 		long daysBetween = ChronoUnit.DAYS.between(localDate2, localDate1);
 		return daysBetween;
     }
+    
+    public static Date subtractDaysFromDate(Date date, int days) {
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        localDate = localDate.minusDays(days);
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 }

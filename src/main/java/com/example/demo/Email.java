@@ -1,4 +1,4 @@
-package com.examples.applogic;
+package com.example.demo;
 
 public class Email {
     private String recipientEmail;

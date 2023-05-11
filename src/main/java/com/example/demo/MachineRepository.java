@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface MachineRepository extends JpaRepository<Machine, String> {
+public interface MachineRepository extends JpaRepository<Machine, Integer> {
 
     @Query("SELECT m FROM Machine m")
     List<Machine> getAllMachines();

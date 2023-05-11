@@ -11,10 +11,8 @@ import lombok.Data;
 @Data
 public class Machine {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
     
+    @Id
     private String machineSerialNumber;
     private String machineType;
     
@@ -29,13 +27,6 @@ public class Machine {
     }
     
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     public String getMachineSerialNumber() {
         return machineSerialNumber;

@@ -8,14 +8,14 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
+@Table(name="spare_part")
 @Data
 public class SparePart {
     
     @Id
- 
     private String serialNumber;
     
-  
+    @Column(name="part_type_id")
     private int partTypeID;
     
    

@@ -1,8 +1,7 @@
 package com.example.demo;
 
 import java.text.ParseException;
-
-import com.examples.applogic.Order;
+import java.util.Date;
 
 public class RequiredPart {
     
@@ -26,11 +25,16 @@ public class RequiredPart {
         this.expectedDeliveryDuration=partType.getExpectedDeliveryDuration();
     }
     
-    public Order toOrder(double deliveryCharge, String orderMethod, String orderDate) {
+    public Order toOrder(double deliveryCharge, String orderMethod, String orderDate) throws ParseException {
     	if (quantity>0) {
-    		return new Order(partTypeID, partName, supplierID, orderMethod, quantity, orderDate,  itemPrice*quantity, deliveryCharge);
+    		
+    		
+    		
+    		return new Order(partTypeID, partName, supplierID, orderMethod, quantity, new Date(),  itemPrice*quantity, deliveryCharge);
     	} else return null;
     }
+    
+    
 
     public int getPartTypeID() {
         return partTypeID;

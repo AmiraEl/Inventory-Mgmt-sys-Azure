@@ -15,7 +15,7 @@ public class InventoryService {
     private SparePartRepository sparePartRepository;
 
     public List<PartType> getAllPartTypes() {
-        return partTypeRepository.getallparttypes();
+        return partTypeRepository.findAll();
     }
 
     public PartType getPartTypeById(int id) {
@@ -63,22 +63,27 @@ public class InventoryService {
     }
     
     public int reserveSpareParts(int partTypeID, String machineSerialNum, int quantityNeeded) {
-        List<SparePart> spareParts = sparePartRepository.searchSparePartByPartTypeID(partTypeID);
+        List<SparePart> spareParts = sparePartRepository.findAll();
         for (SparePart sparePart : spareParts) {
-            if (quantityNeeded > 0) {
-                if (sparePart.isReserved()) {
-                    if (sparePart.getReservedMachineSerialNum().equals(machineSerialNum)) {
-                        quantityNeeded--;
-                    }
-                } else {
-                    sparePart.setReserved(true);
-                    sparePart.setReservedMachineSerialNum(machineSerialNum);
-                    sparePartRepository.save(sparePart);
-                    quantityNeeded--;
-                }
+        	
+            if (sparePart.getPartTypeID()==partTypeID && sparePart.isReserved() &&sparePart.getReservedMachineSerialNum().equals(machineSerialNum)) {
+            	quantityNeeded--;
             }
+            else if (sparePart.getPartTypeID()==partTypeID && !sparePart.isReserved()){
+            	
+            	sparePart.setReserved(true);
+                sparePart.setReservedMachineSerialNum(machineSerialNum);
+                sparePartRepository.save(sparePart);
+                quantityNeeded--;
+                System.out.println(sparePart);
+            	
+            }
+            
+            	
         }
         return quantityNeeded;
     }
-
 }
+
+
+
